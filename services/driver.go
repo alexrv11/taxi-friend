@@ -50,3 +50,8 @@ func (d *Driver) GetAll(radio, latitude, longitude float64) ([]models.DriverLoca
 func (d *Driver) GetItem(driverId string) (*models.Driver, error)  {
 	return d.driverRepository.GetItem(driverId)
 }
+
+func (d *Driver) UpdateLocation(driverId string, location models.Location) error {
+
+	return d.driverRepository.UpdateLocation(driverId, location)
+}

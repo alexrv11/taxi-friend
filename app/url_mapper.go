@@ -8,17 +8,25 @@ import (
 
 type Mapper struct {
 	//driver handlers
-	DriverMapper *DriverMapper
+	Driver *DriverMapper
+	Qr     *QrMapper
 }
 
-func NewMapper(driverMapper *DriverMapper) *Mapper {
-	return &Mapper{DriverMapper: driverMapper}
+func NewMapper(driverMapper *DriverMapper, qr *QrMapper) *Mapper {
+	return &Mapper{Driver: driverMapper, Qr: qr}
 }
 
 type DriverMapper struct {
 	CreatorDriver echo.HandlerFunc
 	GetterDriver  echo.HandlerFunc
 	GetterItemDriver echo.HandlerFunc
+	UpdateLocation echo.HandlerFunc
+}
+
+type QrMapper struct {
+	Create echo.HandlerFunc
+	Get echo.HandlerFunc
+	UpdateDriver echo.HandlerFunc
 }
 
 func NewDriverMapper(driver *handlers.Driver) *DriverMapper {
@@ -26,7 +34,12 @@ func NewDriverMapper(driver *handlers.Driver) *DriverMapper {
 		CreatorDriver: driver.Create,
 		GetterDriver: driver.GetAll,
 		GetterItemDriver: driver.GetItem,
+		UpdateLocation: driver.UpdateLocation,
 	}
+}
+
+func NewQrMapper(qr *handlers.Qr) *QrMapper  {
+	return &QrMapper{ Create: qr.Create, Get: qr.Get, UpdateDriver: qr.UpdateDriver }
 }
 
 func routingAPI(e *echo.Echo, mapper *Mapper){
@@ -38,7 +51,13 @@ func routingAPI(e *echo.Echo, mapper *Mapper){
 
 
 	driverGroup := e.Group("/drivers")
-	driverGroup.POST("/", mapper.DriverMapper.CreatorDriver)
-	driverGroup.GET("/", mapper.DriverMapper.GetterDriver)
-	driverGroup.GET("/:driverId", mapper.DriverMapper.GetterItemDriver)
+	driverGroup.POST("/", mapper.Driver.CreatorDriver)
+	driverGroup.GET("/", mapper.Driver.GetterDriver)
+	driverGroup.GET("/:driverId", mapper.Driver.GetterItemDriver)
+	driverGroup.PUT("/:driverId/location", mapper.Driver.UpdateLocation)
+
+	qrGroup := e.Group("/qr")
+	qrGroup.POST("/", mapper.Qr.Create)
+	qrGroup.GET("/:code", mapper.Qr.Get)
+	qrGroup.PUT("/:code/driver/:driverId", mapper.Qr.UpdateDriver)
 }

@@ -22,6 +22,7 @@ func (d *Driver) Create(c echo.Context) error {
 	if err := c.Bind(input); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
+
 	d.DriverService.Create(input)
 	return c.JSON(http.StatusCreated, nil)
 }
@@ -49,4 +50,22 @@ func (d *Driver) GetItem(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, models.Response{Result: result})
+}
+
+func (d *Driver) UpdateLocation(c echo.Context) error {
+	driverId := c.Param("driverId")
+	var location models.Location
+
+	if err := c.Bind(&location); err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	err := d.DriverService.UpdateLocation(driverId, location)
+
+
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err)
+	}
+
+	return c.NoContent(http.StatusOK)
 }

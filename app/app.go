@@ -21,21 +21,24 @@ func Start(e *echo.Echo){
 }
 
 func initRouter(router *echo.Echo, mapper *Mapper) {
-
-
-		routingAPI(router, mapper)
-
+	routingAPI(router, mapper)
 }
 
 func BuildMapper() *Mapper {
 	configuration := config.LoadConfig()
 	db := ConnectDatabase(configuration)
+
 	repoBuilder := BuildRepositoryFactory(db)
+
 	driverService := services.NewDriver(repoBuilder)
 	driverHandler := handlers.NewDriver(driverService)
 	driverMapper := NewDriverMapper(driverHandler)
-	mapper := NewMapper(driverMapper)
 
+	qrService := &services.Qr{QrRepository: repoBuilder.CreateQrRepository()}
+	qrHandler := &handlers.Qr{ QrService: qrService}
+	qrMapper := NewQrMapper(qrHandler)
+
+	mapper := NewMapper(driverMapper, qrMapper)
 
 	return mapper
 }
