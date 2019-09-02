@@ -38,7 +38,11 @@ func BuildMapper() *Mapper {
 	qrHandler := &handlers.Qr{ QrService: qrService}
 	qrMapper := NewQrMapper(qrHandler)
 
-	mapper := NewMapper(driverMapper, qrMapper)
+	orderService := &services.Order{ OrderRepository: repoBuilder.CreateOrderRepository()}
+	orderHandler := &handlers.Order{ OrderService: orderService }
+	orderMapper := NewOrderMapper(orderHandler)
+
+	mapper := NewMapper(driverMapper, qrMapper, orderMapper)
 
 	return mapper
 }
