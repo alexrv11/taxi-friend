@@ -64,6 +64,7 @@ func routingAPI(e *echo.Echo, mapper *Mapper){
 	driverGroup := e.Group("/drivers")
 	driverGroup.POST("/", mapper.Driver.CreatorDriver)
 	driverGroup.GET("/", mapper.Driver.GetterDriver)
+	driverGroup.GET("", mapper.Driver.GetterDriver)
 	driverGroup.GET("/:driverId", mapper.Driver.GetterItemDriver)
 	driverGroup.PUT("/:driverId/location", mapper.Driver.UpdateLocation)
 

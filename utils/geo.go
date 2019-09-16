@@ -6,19 +6,22 @@ const RadioEarth = 6371
 
 func DistanceInKmBetweenEarthCoordinates(lat1, long1, lat2, long2 float64)  float64 {
 
-	dLat := toRadians(lat2-lat1)
-	dLon := toRadians(long2-long1)
+	radlat1 := float64(math.Pi * lat1 / 180)
+	radlat2 := float64(math.Pi * lat2 / 180)
 
-	lat1 = toRadians(lat1)
-	lat2 = toRadians(lat2)
+	theta := float64(long1 - long2)
+	radtheta := float64(math.Pi * theta / 180)
 
-	a := math.Sin(dLat/2) * math.Sin(dLat/2) + math.Sin(dLon/2) * math.Sin(dLon/2) * math.Cos(lat1) * math.Cos(lat2)
-	c := 2 * math.Atan2(math.Sqrt(a), math.Sqrt(1-a))
+	dist := math.Sin(radlat1) * math.Sin(radlat2) + math.Cos(radlat1) * math.Cos(radlat2) * math.Cos(radtheta)
 
-	return RadioEarth * c
-}
+	if dist > 1 {
+		dist = 1
+	}
 
-func toRadians(angle float64) float64 {
+	dist = math.Acos(dist)
+	dist = dist * 180 / math.Pi
+	dist = dist * 60 * 1.1515
+	dist = dist * 1.609344
 
-	return angle / (math.Pi/180)
+	return dist
 }
