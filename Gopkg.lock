@@ -98,14 +98,6 @@
   version = "v1.3.1"
 
 [[projects]]
-  branch = "master"
-  digest = "1:3d1b951540fb7236b9801db5349308d428120c127d967f960a02a1c0994ba993"
-  name = "github.com/gusaul/go-dynamock"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "b1eca1fb961ef327d5febda80173bd50b6ffe4d0"
-
-[[projects]]
   digest = "1:c0d19ab64b32ce9fe5cf4ddceba78d5bc9807f0016db6b1183599da3dcc24d10"
   name = "github.com/hashicorp/hcl"
   packages = [
@@ -336,10 +328,8 @@
   input-imports = [
     "github.com/aws/aws-sdk-go/aws",
     "github.com/aws/aws-sdk-go/aws/session",
-    "github.com/aws/aws-sdk-go/service/dynamodb",
     "github.com/google/uuid",
     "github.com/guregu/dynamo",
-    "github.com/gusaul/go-dynamock",
     "github.com/labstack/echo",
     "github.com/spf13/viper",
     "github.com/stretchr/testify/assert",
