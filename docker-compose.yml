@@ -10,4 +10,4 @@ services:
     environment:
       GET_HOSTS_FROM: dns
     ports:
-      - 8080:1323
+      - 1323:1323

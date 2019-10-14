@@ -12,6 +12,7 @@ func LoadConfig() *ApiConfig {
 	if loaded {
 		panic("api config: is not possible to load config twice")
 	}
+
 	loaded = true
 	v := viper.New()
 
@@ -92,6 +93,11 @@ type CacheConfig struct {
 	DefaultPurge  int `mapstructure:"defaultPurge"`
 }
 
+type ServerConfig struct {
+	Crt string `mapstructure:"crt"`
+	Key string `mapstructure:"key"`
+}
+
 type ApiConfig struct {
 	DB DBConfig `mapstructure:"db"`
 	// debug mode
@@ -110,4 +116,6 @@ type ApiConfig struct {
 	Doc DocsConfig `mapstructure:"docs"`
 	// Cache config
 	Cache CacheConfig `mapstructure:"cache"`
+
+	Server ServerConfig `mapstructure:"server"`
 }

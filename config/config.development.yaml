@@ -27,6 +27,11 @@ cache:
   defaultExpire: 5 #minutes
   defaultPurge: 10 #minutes
 
+# TLS configuration
+server:
+  crt: "server.dev.crt"
+  key: "server.dev.key"
+
 #S3
 file_storage:
   endpoint: "localhost:9000"

@@ -11,6 +11,10 @@ RUN mkdir -p /go/src/alex/taxi-server
 # Set the Current Working Directory inside the container
 WORKDIR /go/src/alex/taxi-server
 
+RUN apk --update add ca-certificates
+
+RUN mkdir -p /var/www/.cache
+
 # Copy go mod and sum files
 COPY . /go/src/alex/taxi-server
 
@@ -19,7 +23,8 @@ COPY . /go/src/alex/taxi-server
 RUN go install /go/src/alex/taxi-server
 
 # Expose port 8080 to the outside world
-EXPOSE 8080
+EXPOSE 1323
 
 # Command to run the executable
 CMD ["/go/bin/taxi-server"]
+#ENTRYPOINT [ "/go/src/alex/taxi-server/main" ]

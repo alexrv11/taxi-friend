@@ -10,7 +10,8 @@ import (
 func main(){
 	e := echo.New()
 
-	e.AutoTLSManager.Cache = autocert.DirCache("~/.cache")
+	e.Pre(middleware.HTTPSRedirect())
+	e.AutoTLSManager.HostPolicy = autocert.HostWhitelist("taxifriend.com")
 	e.Use(middleware.Recover())
 	e.Use(middleware.Logger())
 

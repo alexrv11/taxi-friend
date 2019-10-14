@@ -12,20 +12,22 @@ import (
 )
 
 func Start(e *echo.Echo){
-
-	mapper := BuildMapper()
+	configuration := config.LoadConfig()
+	mapper := BuildMapper(configuration)
 
 	initRouter(e, mapper)
 
-	e.Logger.Fatal(e.StartAutoTLS(":1323"))
+	crtFileName := configuration.Server.Crt
+	keyFileName := configuration.Server.Key
+	e.Logger.Fatal(e.StartTLS(":1323", crtFileName, keyFileName))
 }
 
 func initRouter(router *echo.Echo, mapper *Mapper) {
 	routingAPI(router, mapper)
 }
 
-func BuildMapper() *Mapper {
-	configuration := config.LoadConfig()
+func BuildMapper(configuration *config.ApiConfig) *Mapper {
+
 	db := ConnectDatabase(configuration)
 
 	repoBuilder := BuildRepositoryFactory(db)
