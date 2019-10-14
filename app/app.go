@@ -17,7 +17,7 @@ func Start(e *echo.Echo){
 
 	initRouter(e, mapper)
 
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.StartAutoTLS(":1323"))
 }
 
 func initRouter(router *echo.Echo, mapper *Mapper) {
