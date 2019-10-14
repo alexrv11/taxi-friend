@@ -57,7 +57,7 @@ func routingAPI(e *echo.Echo, mapper *Mapper){
 
 	//ping
 	e.GET("/ping", func(context echo.Context) error {
-		return context.String(http.StatusOK, "pong")
+		return context.String(http.StatusOK, "pong taxi server")
 	})
 
 
