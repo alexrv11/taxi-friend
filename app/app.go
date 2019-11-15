@@ -17,9 +17,7 @@ func Start(e *echo.Echo){
 
 	initRouter(e, mapper)
 
-	crtFileName := configuration.Server.Crt
-	keyFileName := configuration.Server.Key
-	e.Logger.Fatal(e.StartTLS(":1323", crtFileName, keyFileName))
+	e.Logger.Fatal(e.Start(":1323"))
 }
 
 func initRouter(router *echo.Echo, mapper *Mapper) {
