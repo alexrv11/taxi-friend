@@ -53,7 +53,7 @@ func ConnectDatabase(configuration *config.ApiConfig) *dynamo.DB {
 		WithLogLevel(aws.LogDebugWithHTTPBody)
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
 		Config:     cfg,
-		Profile: configuration.DB.Profile,
+		//Profile: configuration.DB.Profile, /*run locally*/
 		SharedConfigState: session.SharedConfigEnable,
 	}))
 
